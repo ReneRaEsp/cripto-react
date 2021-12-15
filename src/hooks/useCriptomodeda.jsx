@@ -1,11 +1,11 @@
 import { useState } from "react";
 import styled from "@emotion/styled";
 
-const useMoneda = (label, stateInicial, opciones) => {
+const useCriptomoneda = (label, stateInicial, opciones) => {
   //State de nuestro custom hook
-  const [state, actualizarState] = useState(stateInicial);
+  const [cripto, actualizarCripto] = useState();
 
-  const Seleccionar = () => {
+  const SelectCripto = () => {
     const Div = styled.div`
       display: flex;
       justify-content: center;
@@ -35,23 +35,26 @@ const useMoneda = (label, stateInicial, opciones) => {
       font-size: 1rem;
       font-weight: 800;
     `;
+
     return (
       <Div>
         <Label>{label}: </Label>
-        <Select value={state} onChange={(e) => actualizarState(e.target.value)}>
-          <Option value=""> ------ Seleccionar Moneda ------ </Option>
-          {opciones.map((opcion) => (
-            <Option key={opcion.codigo} value={opcion.codigo}>
+        <Select value={cripto} onChange={(e) => actualizarCripto(e.target.value)}>
+          <Option value=""> ------ Seleccionar Criptomoneda ------ </Option>
+          {opciones.map(({ CoinInfo }) => {
+            console.log(CoinInfo);
+            const { Name, FullName, Id } =  CoinInfo;
+            return(<Option key={Id} value={Name}>
               {" "}
-              {opcion.nombre}{" "}
+              { FullName }{" "}
             </Option>
-          ))}
+          )})}
         </Select>
       </Div>
     );
   };
 
-  return [state, Seleccionar, actualizarState];
+  return [cripto, SelectCripto, actualizarCripto];
 };
 
-export default useMoneda;
+export default useCriptomoneda;
