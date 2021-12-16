@@ -42,7 +42,6 @@ const useCriptomoneda = (label, stateInicial, opciones) => {
         <Select value={cripto} onChange={(e) => actualizarCripto(e.target.value)}>
           <Option value=""> ------ Seleccionar Criptomoneda ------ </Option>
           {opciones.map(({ CoinInfo }) => {
-            console.log(CoinInfo);
             const { Name, FullName, Id } =  CoinInfo;
             return(<Option key={Id} value={Name}>
               {" "}

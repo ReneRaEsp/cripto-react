@@ -4,7 +4,7 @@ import useMoneda from "./../hooks/useMoneda.jsx";
 import useCriptomoneda from "./../hooks/useCriptomodeda.jsx";
 import axios from "axios";
 
-const Formulario = () => {
+const Formulario = ({ guardarMoneda, guardarCriptomoneda }) => {
   const MONEDAS = [
     { codigo: "USD", nombre: "Dolar de Estados Unidos" },
     { codigo: "MXN", nombre: "Peso Mexicano" },
@@ -74,13 +74,17 @@ const Formulario = () => {
     }
     //pasar los datos al componente principal
     saveError(false);
+    //actualizamos el estado mediante las funciones pasadas 
+    //a traves de las props
+    guardarMoneda(moneda);
+    guardarCriptomoneda(criptomoneda);
   };
 
   //Ejecutar llamado a la API
   useEffect(() => {
     const consultarAPI = async () => {
       const url =
-        "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=14&tsym=USD";
+        "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=24&tsym=USD";
       const header = {
         authorization: {
           Apikey:
@@ -91,7 +95,6 @@ const Formulario = () => {
       const { data } = await axios.get(url, header);
       const { Data } = data;
       saveCriptos(Data);
-      console.log(Data);
     };
     consultarAPI();
   }, []);
